@@ -1,102 +1,72 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
-var valid = false 
-var input = ""
-var a = 0
-var spch = ["@", "%", "+"]
+var lower="abcdefghijklmnopqrstuvwxyz";
+var upper="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var number="0123456789";
+var spec="@%+\\/\'!#$^?:,)(}{][~-_.";
 
 
 // Write password to the #password input
 function writePassword() {
-  while (!valid) {
-    input = prompt("How long would you like your password (must be between 8-128)?")
-    a = parseInt(input)  
-  if( a >= 8 && a <= 128) {
-      // Do something
-      
-      valid = true
-    } 
-  else {
-    // Do something else
-    valid = false
+  var password = generatePassword();
+  var passwordText = document.querySelector("#password");
+
+  passwordText.value = password;
+
+}
+
+
+
+function generatePassword () {
+  // By default we assume the user wants nothing. User inputs will change that status as necessary
+  var lowerConfirm = false;
+  var upperConfirm = false;
+  var numberConfirm = false;
+  var specConfirm = false;
+  //Need to add a blank var as a placeholder 
+  var placepass = "";
+//First step is to collect user preferences
+
+//Prompt to ask for length. If the length is not a valid input an alert tells the user and the readonly area asks the user to try again
+  var passLength = prompt("How long would you like your password to be? (Valid entry between 8 and 128")
+  if (passLength < 8 || passLength > 128) {
+    alert("Please enter a valid password length (between 8 and 128)")
+    return "Please try again with a password length between 8 and 128 characters"
+  }
+
+//Generate password
+for(var x=0; x < passLength; x++){
+  //Builds a string one character at a time for each iteration
+  tempPass += fetchChar(lowerCaseAlpha,upperCaseAlpha,numbers,specialChar,wouldLikeLC,wouldLikeUP,wouldLikeNumb,wouldLikeSpecChar);
+}
+return tempPass;  
+
     
-    }
+}
+//function to fetch applicable characters
+function fetchChar() {
+ var char = ""
+ var fetcher = true
+ while (fetcher) {
+  var random = (math.floor(math.random() * 4));
+  if (random == 0 && lowerConfirm) {
+  char = lower.charAt(Math.floor(Math.random() * lower.length));
+  }
+  else if (random == 1 && upperConfirm) {
+  char = upper.charAt(Math.floor(Math.random() * upper.length));
+  }
+  else if (random == 2 && numberConfirm) {
+  char = number.charAt(Math.floor(Math.random() * number.length));
+  }
+  else if (random == 3 && specConfirm) {
+  char = spec.charAt(Math.floor(Math.random() * spec.length));
   }
 
-  valid = false  
-  // while (!valid) {
-  //     input = confirm("Would you like special characters?")
-  //   if (input == true) {
-  //     var password = generatePassword(a, input);
-  //     var passwordText = document.querySelector("#password");
+ }
 
-  //     passwordText.value = password;
-  //     valid = true
-  //   }
-  //  else {
-
-  //   var password = generatePassword(a, input);
-  //   var passwordText = document.querySelector("#password");
-
-  //   passwordText.value = password;
-  //   break
-  //   }
-  // }
-
-  while (!valid) {
-    input = confirm("Would you like special characters?")
-    var password = generatePassword(a, input);
-    var passwordText = document.querySelector("#password");
-    passwordText.value = password;
-    valid = true;
-  }
+ return char
 }
 
 
-function generatePassword(par, par2 ) {
-  var length = par,
-      charset = "abcdefghijklmnopqrstuvwxyz",
-      retVal = "";
-  if (par2 == false) {
-    for (var i = 0, n = charset.length; i < length; ++i) {
-      retVal += charset.charAt(Math.floor(Math.random() * n));
-    }
-    return retVal;
-  }
-  else {
-    for (var i = 0, n = charset.length; i < length; ++i) {
-      retVal += charset.charAt(Math.floor(Math.random() * n));
-    }
-    retVal += spch[Math.floor(Math.random() * spch.length)];
-    return retVal;
-  }
-
-}
-  
-
-
-
-// Add event listener to generate button to  run writePassword on click
-
-generateBtn.addEventListener("click", writePassword); 
-
-
-
-//criteria: length ( 8 -128), character types (upper lower special numbers)
-// THEN my input should be validated and at least one character type should be selected
-//WHEN all prompts are answered
-//THEN a password is generated that matches the selected criteria
-//WHEN the password is generated
-//THEN the password is either displayed in an alert or written to the page
-
-// prompt for the user input
-//check if input is valid
-//if valid set equal to true
-//and proceed to next prompt
-
-
-
-
-
-
-
+// Add event listener to generate button
+generateBtn.addEventListener("click", writePassword);
