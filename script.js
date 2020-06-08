@@ -17,6 +17,9 @@ function writePassword() {
 }
 
 
+//The generator first gathers user input via a series of prompts and confirms. As long as one parameter has been chosen the generator will begin. 
+//It then generates the password by rolling a random number from 0 to 3. This number represents one of our 4 possible character selections, and a value is then chosen from that selection.
+//This reduces the risk that a character group is under represented and the while loop of the fetch function ensures we have the right number of characters.
 
 function generatePassword () {
   // By default we assume the user wants nothing. User inputs will change that status as necessary
@@ -62,7 +65,7 @@ function preferences(par1, par2) {
   return par1;
 }
 
-//function to fetch applicable characters. If the random generator picks an undesired character, the while loop is broken and starts over so as to avoid unwanted characters.
+//function to fetch applicable characters. It uses a while loop to ignore undesired characters while maintaining password length.
 function fetchChar(lower, lowerConfirm, upper, upperConfirm, number, numberConfirm, spec, specConfirm) {
  var char = "";
  var fetcher = true;
