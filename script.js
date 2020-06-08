@@ -47,6 +47,10 @@ function generatePassword () {
     if (lowerConfirm || upperConfirm || numberConfirm || specConfirm) {
     run = false;
     }
+    else {  
+      alert("Please select at least one parameter")
+
+    }
   }
 
 
