@@ -38,7 +38,10 @@ function generatePassword () {
   var run = true;
   while (run){
     lowerConfirm = preferences(lowerConfirm, "lowercase");
-    if (lowerConfirm) {
+    upperConfirm = preferences(upperConfirm, "uppercase");
+    numberConfirm = preferences(numberConfirm, "numbers");
+    specConfirm = preferences(specConfirm, "special characters")
+    if (lowerConfirm || upperConfirm || numberConfirm || specConfirm) {
     run = false;
     }
   }
@@ -47,20 +50,20 @@ function generatePassword () {
   //Generate password
   for (var i=0; i < passLength; i++) {
     //Builds a string one character at a time for each iteration
-    placepass += fetchChar(lower, lowerConfirm);
+    placepass += fetchChar(lower, lowerConfirm, upper, upperConfirm, number, numberConfirm, spec, specConfirm);
   }
   return placepass;  
 
     
 }
 //function to determine user preferences
-function preferences(par1, par2 ) {
+function preferences(par1, par2) {
   par1 = confirm("Would you like " + par2 + " in your password?");
   return par1;
 }
 
 //function to fetch applicable characters. If the random generator picks an undesired character, the while loop is broken and starts over so as to avoid unwanted characters.
-function fetchChar(lower, lowerConfirm) {
+function fetchChar(lower, lowerConfirm, upper, upperConfirm, number, numberConfirm, spec, specConfirm) {
  var char = "";
  var fetcher = true;
  while (fetcher) {
@@ -69,17 +72,22 @@ function fetchChar(lower, lowerConfirm) {
   char = lower.charAt(Math.floor(Math.random() * lower.length));
   fetcher = false;
   console.log(char);
-
   }
-  // else if (random == 1 && upperConfirm) {
-  // char = upper.charAt(Math.floor(Math.random() * upper.length));
-  // }
-  // else if (random == 2 && numberConfirm) {
-  // char = number.charAt(Math.floor(Math.random() * number.length));
-  // }
-  // else if (random == 3 && specConfirm) {
-  // char = spec.charAt(Math.floor(Math.random() * spec.length));
-  // }
+  if (random == 1 && upperConfirm) {
+    char = upper.charAt(Math.floor(Math.random() * upper.length));
+    fetcher = false;
+    console.log(char);
+  }
+  if (random == 2 && numberConfirm) {
+    char = number.charAt(Math.floor(Math.random() * number.length));
+    fetcher = false;
+    console.log(char);
+  }
+  if (random == 3 && specConfirm) {
+    char = spec.charAt(Math.floor(Math.random() * spec.length));
+    fetcher = false;
+    console.log(char);
+  }  
 
  }
 
